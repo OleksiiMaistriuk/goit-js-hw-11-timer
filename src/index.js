@@ -1,1 +1,1 @@
-import './styles.css';
+import CountdownTimer from './timer';
