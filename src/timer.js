@@ -1,27 +1,26 @@
-const template = () => `<div class="field">
-      <span class="value" data-value="days">11</span>
+class CountdownTimer {
+  constructor({ targetDate, selector }) {
+    const template = `<div class="field">
+      <span class="value" data-value="days">00</span>
       <span class="label">Days</span>
     </div>
 
     <div class="field">
-      <span class="value" data-value="hours">11</span>
+      <span class="value" data-value="hours">00</span>
       <span class="label">Hours</span>
     </div>
 
     <div class="field">
-      <span class="value" data-value="mins">11</span>
+      <span class="value" data-value="mins">00</span>
       <span class="label">Minutes</span>
     </div>
 
     <div class="field">
-      <span class="value" data-value="secs">11</span>
+      <span class="value" data-value="secs">00</span>
       <span class="label">Seconds</span>
     </div>`;
-
-class CountdownTimer {
-  constructor({ targetDate, selector }) {
     this.container = document.querySelector(selector);
-    this.container.insertAdjacentHTML('beforeend', template());
+    this.container.insertAdjacentHTML('beforeend', template);
 
     this.targetDate = targetDate.getTime();
 
@@ -31,13 +30,12 @@ class CountdownTimer {
       mins: document.querySelector('[data-value="mins"]'),
       secs: document.querySelector('[data-value="secs"]'),
     };
-
     this.start();
   }
 
   start() {
     setInterval(() => {
-      this.updateTimer(this.targetDate - Date.now());
+      this.updateTimer(this.targetDate - Date.now()), this.render();
     }, 1000);
   }
   pad(value) {
@@ -45,18 +43,19 @@ class CountdownTimer {
   }
 
   updateTimer(time) {
-    const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-
-    const hours = this.pad(
+    this.days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+    this.hours = this.pad(
       Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
     );
-    const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-    const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
+    this.mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
+    this.secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
+  }
 
-    this.refs.days.textContent = `${days}`;
-    this.refs.hours.textContent = `${hours}`;
-    this.refs.mins.textContent = `${mins}`;
-    this.refs.secs.textContent = `${secs}`;
+  render() {
+    this.refs.days.textContent = `${this.days}`;
+    this.refs.hours.textContent = `${this.hours}`;
+    this.refs.mins.textContent = `${this.mins}`;
+    this.refs.secs.textContent = `${this.secs}`;
   }
 }
 
