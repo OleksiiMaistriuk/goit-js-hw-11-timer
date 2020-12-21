@@ -32,7 +32,6 @@ class CountdownTimer {
       secs: document.querySelector('[data-value="secs"]'),
     };
 
-    // this.updateTimer(5);
     this.start();
   }
 
